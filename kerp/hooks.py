@@ -138,6 +138,7 @@ after_install = "kerp.install.after_install"
 # Hook on document methods and events
 
 doc_events = {
+    "Item": {"autoname": "kerp.overrides.item.autoname"},
     "Item Group": {
         "before_insert": "kerp.overrides.item_group.before_insert",
         "on_trash": "kerp.overrides.item_group.on_trash",
