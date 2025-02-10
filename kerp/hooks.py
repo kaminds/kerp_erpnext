@@ -83,7 +83,7 @@ app_license = "agpl-3.0"
 # ------------
 
 # before_install = "kerp.install.before_install"
-# after_install = "kerp.install.after_install"
+after_install = "kerp.install.after_install"
 
 # Uninstallation
 # ------------
