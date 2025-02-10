@@ -137,13 +137,6 @@ after_install = "kerp.install.after_install"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
 doc_events = {
     "Item Group": {
         "before_insert": "kerp.overrides.item_group.before_insert",
@@ -156,6 +149,10 @@ doc_events = {
     "Manufacturer": {
         "before_insert": "kerp.overrides.manufacturer.before_insert",
         "on_trash": "kerp.overrides.manufacturer.on_trash",
+    },
+    "Batch": {
+        "autoname": "kerp.overrides.batch.autoname",
+        "before_save": "kerp.overrides.batch.before_save",
     },
 }
 
