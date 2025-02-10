@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "creation": "2025-01-29 13:55:16.071516",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "quantity",
+  "base_uom",
+  "pack_size_uom",
+  "abbreviation"
+ ],
+ "fields": [
+  {
+   "description": "Enter the quantity (of Base UOM) in each Pack Size UOM",
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity",
+   "non_negative": 1,
+   "precision": "1",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "base_uom",
+   "fieldtype": "Link",
+   "label": "Base UOM",
+   "options": "UOM",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "pack_size_uom",
+   "fieldtype": "Link",
+   "label": "Pack Size UOM",
+   "options": "UOM",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "abbreviation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Abbreviation",
+   "read_only": 1,
+   "set_only_once": 1,
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-06 15:13:28.601091",
+ "modified_by": "Administrator",
+ "module": "KERP",
+ "name": "Item Pack Size",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

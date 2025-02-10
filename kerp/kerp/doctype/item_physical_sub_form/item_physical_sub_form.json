@@ -1,0 +1,54 @@
+{
+ "actions": [],
+ "autoname": "prompt",
+ "creation": "2025-01-30 15:28:49.407859",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "abbreviation",
+  "item_physical_form_reference"
+ ],
+ "fields": [
+  {
+   "fieldname": "abbreviation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Abbreviation",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "item_physical_form_reference",
+   "fieldtype": "Table",
+   "label": "Item Physical Form Reference",
+   "options": "Item Physical Form Reference",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-06 14:48:32.472465",
+ "modified_by": "Administrator",
+ "module": "KERP",
+ "name": "Item Physical Sub-Form",
+ "naming_rule": "Set by user",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
