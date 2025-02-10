@@ -144,6 +144,20 @@ after_install = "kerp.install.after_install"
 # 		"on_trash": "method"
 # 	}
 # }
+doc_events = {
+    "Item Group": {
+        "before_insert": "kerp.overrides.item_group.before_insert",
+        "on_trash": "kerp.overrides.item_group.on_trash",
+    },
+    "Brand": {
+        "before_insert": "kerp.overrides.brand.before_insert",
+        "on_trash": "kerp.overrides.brand.on_trash",
+    },
+    "Manufacturer": {
+        "before_insert": "kerp.overrides.manufacturer.before_insert",
+        "on_trash": "kerp.overrides.manufacturer.on_trash",
+    },
+}
 
 # Scheduled Tasks
 # ---------------
