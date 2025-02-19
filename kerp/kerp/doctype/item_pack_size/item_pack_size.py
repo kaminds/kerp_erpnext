@@ -9,6 +9,13 @@ from kerp.utils import upsert_item_attribute, remove_item_attr_value
 
 class ItemPackSize(Document):
     def autoname(self):
+        if int(self.quantity) == 0:
+            self.name = "None"
+            self.abbreviation = "0"
+            self.base_uom = "Nos"
+            self.pack_size_uom = "Nos"
+            return
+
         base_uom = frappe.get_doc("UOM", self.base_uom)
 
         if base_uom.must_be_whole_number:

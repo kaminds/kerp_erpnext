@@ -13,13 +13,14 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Abbreviation",
+   "read_only": 1,
    "set_only_once": 1,
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-03 15:21:58.822253",
+ "modified": "2025-02-19 16:38:34.533029",
  "modified_by": "Administrator",
  "module": "KERP",
  "name": "Item Variant Name",

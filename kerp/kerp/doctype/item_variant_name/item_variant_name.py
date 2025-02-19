@@ -7,7 +7,10 @@ from kerp.utils import upsert_item_attribute, remove_item_attr_value
 
 class ItemVariantName(Document):
     def before_save(self):
-        self.abbreviation = "".join(self.name.split()).upper()
+        if self.name == "None":
+            self.abbreviation = "0"
+        else:
+            self.abbreviation = "".join(self.name.split()).upper()
         upsert_item_attribute(self.doctype, self.name, self.abbreviation)
 
     def on_trash(self):

@@ -4,6 +4,7 @@ CUSTOM_FIELDS = {
             "fieldname": "item_name_abbreviation_kerp",
             "label": "Item Name Abbreviation",
             "fieldtype": "Data",
+            "unique": "1",
             "depends_on": "eval:doc.has_variants && doc.is_stock_item",
             "mandatory_depends_on": "eval:doc.has_variants",
             "insert_after": "item_name",
@@ -32,8 +33,8 @@ CUSTOM_FIELDS = {
             "insert_after": "description",
         },
         {
-            "fieldname": "manufacturer_item_code_kerp",
-            "label": "Manufacturer Item Code",
+            "fieldname": "brand_item_reference_kerp",
+            "label": "Brand Item Reference",
             "fieldtype": "Data",
             "description": 'Type "None" if not available',
             "depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
@@ -47,7 +48,7 @@ CUSTOM_FIELDS = {
             "options": "Item Pack Size",
             "depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
             "mandatory_depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
-            "insert_after": "manufacturer_item_code_kerp",
+            "insert_after": "brand_item_reference_kerp",
         },
         {
             "fieldname": "item_physical_form_kerp",

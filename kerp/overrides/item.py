@@ -1,4 +1,5 @@
 import frappe
+import re
 from frappe.utils import cstr
 
 
@@ -10,11 +11,11 @@ def autoname(self, method=None):
             "Item Variant Name": self.item_variant_name_kerp,
             "Item Pack Size": self.item_pack_size_kerp,
             "Brand": self.brand,
-            "Manufacturer Item Code": (
+            "Brand Item Reference": (
                 "0"
-                if not self.manufacturer_item_code_kerp
-                or self.manufacturer_item_code_kerp == "None"
-                else self.manufacturer_item_code_kerp
+                if not self.brand_item_reference_kerp
+                or self.brand_item_reference_kerp == "None"
+                else re.sub(r"\s+", "", self.brand_item_reference_kerp)
             ),
             "Item Physical Form": self.item_physical_form_kerp,
             "Item Physical Sub-Form": self.item_physical_sub_form_kerp,
@@ -57,7 +58,7 @@ def autoname(self, method=None):
         for attr in item_attrs:
             if (
                 attr.attribute == "Item Name Abbreviation"
-                or attr.attribute == "Manufacturer Item Code"
+                or attr.attribute == "Brand Item Reference"
             ):
                 abbreviations.append(attr.attribute_value)
                 continue
@@ -87,16 +88,31 @@ def autoname(self, method=None):
         abbreviations[6] += abbreviations.pop(7)
 
         if abbreviations:
-            item_grade_standard = "" if abbreviations[-1] == "0" else abbreviations[-1]
-            mfr_item_code = (
+            item_assay_value = (
                 ""
-                if attrs_map["Manufacturer Item Code"] == "0"
-                else attrs_map["Manufacturer Item Code"]
+                if attrs_map["Item Assay Value"] == "None"
+                else attrs_map["Item Assay Value"]
             )
+            item_variant_name = (
+                ""
+                if attrs_map["Item Variant Name"] == "None"
+                else attrs_map["Item Variant Name"]
+            )
+            item_grade_standard = (
+                ""
+                if attrs_map["Item Grade Standard"] == "None"
+                else attrs_map["Item Grade Standard"]
+            )
+            brand_item_ref = (
+                ""
+                if attrs_map["Brand Item Reference"] == "0"
+                else f"({attrs_map['Brand Item Reference']})"
+            )
+            item_brand = (
+                "" if attrs_map["Brand"] == "None" else f"- {attrs_map['Brand']}"
+            )
+
             self.item_code = "-".join(abbreviations)
             self.name = self.item_code.upper()
-            self.item_name = (
-                f'{item_template.item_name} {attrs_map["Item Assay Value"]} {attrs_map["Item Variant Name"]} {item_grade_standard} - {attrs_map["Brand"]} {mfr_item_code}'.replace(
-                    "  ", " "
-                ).strip(),
-            )
+            self.item_name = f"{item_template.item_name} {item_assay_value} {item_variant_name} {item_grade_standard} {brand_item_ref} {item_brand}"
+            self.item_name = re.sub(r"\s{2,}", " ", self.item_name).strip()
