@@ -10,7 +10,6 @@ def autoname(self, method=None):
             "Item Variant Name": self.item_variant_name_kerp,
             "Item Pack Size": self.item_pack_size_kerp,
             "Brand": self.brand,
-            "Manufacturer": self.manufacturer_kerp,
             "Manufacturer Item Code": (
                 "0"
                 if not self.manufacturer_item_code_kerp
@@ -85,7 +84,7 @@ def autoname(self, method=None):
             )
             abbreviations.append(abbr_or_value)
 
-        abbreviations[7] += abbreviations.pop(8)
+        abbreviations[6] += abbreviations.pop(7)
 
         if abbreviations:
             item_grade_standard = "" if abbreviations[-1] == "0" else abbreviations[-1]
@@ -101,4 +100,3 @@ def autoname(self, method=None):
                     "  ", " "
                 ).strip(),
             )
-

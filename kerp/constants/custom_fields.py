@@ -32,22 +32,13 @@ CUSTOM_FIELDS = {
             "insert_after": "description",
         },
         {
-            "fieldname": "manufacturer_kerp",
-            "label": "Manufacturer",
-            "fieldtype": "Link",
-            "options": "Manufacturer",
-            "depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
-            "mandatory_depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
-            "insert_after": "brand",
-        },
-        {
             "fieldname": "manufacturer_item_code_kerp",
             "label": "Manufacturer Item Code",
             "fieldtype": "Data",
             "description": 'Type "None" if not available',
             "depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
             "mandatory_depends_on": "eval:!doc.has_variants && doc.is_stock_item && !doc.is_fixed_asset",
-            "insert_after": "manufacturer_kerp",
+            "insert_after": "brand",
         },
         {
             "fieldname": "item_pack_size_kerp",

@@ -147,10 +147,6 @@ doc_events = {
         "before_insert": "kerp.overrides.brand.before_insert",
         "on_trash": "kerp.overrides.brand.on_trash",
     },
-    "Manufacturer": {
-        "before_insert": "kerp.overrides.manufacturer.before_insert",
-        "on_trash": "kerp.overrides.manufacturer.on_trash",
-    },
     "Batch": {
         "autoname": "kerp.overrides.batch.autoname",
         "before_save": "kerp.overrides.batch.before_save",

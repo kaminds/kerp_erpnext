@@ -171,7 +171,6 @@ $.extend(erpnext.item, {
 							if (r.message) {
 								if (
 									fieldname !== "Item Physical Sub-Form" &&
-									fieldname !== "Manufacturer" &&
 									fieldname !== "Item Grade Standard"
 								) {
 									e.target.awesomplete.list = r.message.map(function (d) {
@@ -193,9 +192,6 @@ $.extend(erpnext.item, {
 				})
 				.on("awesomplete-selectcomplete", (e) => {
 					let fieldname = e.target.dataset.fieldname;
-					if (fieldname === "Brand") {
-						get_brand_manufacturers(e.target.value);
-					}
 					if (fieldname === "Item Physical Form") {
 						get_item_physical_sub_forms(e.target.value);
 					}
@@ -206,39 +202,6 @@ $.extend(erpnext.item, {
 		});
 	},
 });
-
-function get_brand_manufacturers(brand) {
-	const manufacturer_form_field = document.querySelector(
-		"div.modal.show input[data-fieldname='Manufacturer']"
-	);
-	manufacturer_form_field.value = "";
-	frappe.call({
-		method: "frappe.client.get_list",
-		args: {
-			doctype: "Manufacturer Reference",
-			fields: ["manufacturer"],
-			filters: { parent: brand },
-			parent: "Brand",
-		},
-		callback: function (r) {
-			if (r.message) {
-				frappe.call({
-					method: "frappe.client.get_list",
-					args: {
-						doctype: "Manufacturer",
-						fields: ["short_name"],
-						filters: [["name", "in", r.message.map((row) => row.manufacturer)]],
-					},
-					callback: function (r) {
-						manufacturer_form_field.awesomplete.list = r.message.map(function (d) {
-							return d.short_name;
-						});
-					},
-				});
-			}
-		},
-	});
-}
 
 function get_item_physical_sub_forms(form) {
 	const item_physical_sub_form_field = document.querySelector(
