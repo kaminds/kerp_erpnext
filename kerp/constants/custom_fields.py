@@ -139,4 +139,24 @@ CUSTOM_FIELDS = {
             "insert_after": "column_break_3",
         },
     ],
+    "Customer": [
+        {
+            "fieldname": "customer_code_kerp",
+            "label": "Customer Code",
+            "fieldtype": "Data",
+            "unique": "1",
+            "read_only": "1",
+            "no_copy": "1",
+            "insert_after": "customer_name",
+        },
+        {
+            "fieldname": "country_kerp",
+            "label": "Country",
+            "fieldtype": "Link",
+            "options": "Country",
+            "read_only_depends_on": "eval:!doc.__islocal",
+            "mandatory_depends_on": "eval:doc.__islocal",
+            "insert_after": "customer_group",
+        },
+    ],
 }
