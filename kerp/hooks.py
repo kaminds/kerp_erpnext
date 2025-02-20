@@ -152,6 +152,7 @@ doc_events = {
         "before_save": "kerp.overrides.batch.before_save",
     },
     "Address": {"autoname": "kerp.overrides.address.autoname"},
+    "Contact": {"autoname": "kerp.overrides.contact.autoname"},
     "Customer": {"autoname": "kerp.overrides.customer.autoname"},
     "Supplier": {"autoname": "kerp.overrides.supplier.autoname"},
 }
@@ -252,4 +253,3 @@ doc_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
