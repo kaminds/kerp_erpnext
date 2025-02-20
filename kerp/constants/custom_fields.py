@@ -159,4 +159,15 @@ CUSTOM_FIELDS = {
             "insert_after": "customer_group",
         },
     ],
+    "Supplier": [
+        {
+            "fieldname": "supplier_code_kerp",
+            "label": "Supplier Code",
+            "fieldtype": "Data",
+            "unique": "1",
+            "read_only": "1",
+            "no_copy": "1",
+            "insert_after": "supplier_name",
+        }
+    ],
 }

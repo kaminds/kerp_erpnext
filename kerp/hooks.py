@@ -152,6 +152,7 @@ doc_events = {
         "before_save": "kerp.overrides.batch.before_save",
     },
     "Customer": {"autoname": "kerp.overrides.customer.autoname"},
+    "Supplier": {"autoname": "kerp.overrides.supplier.autoname"},
 }
 
 # Scheduled Tasks
