@@ -151,6 +151,7 @@ doc_events = {
         "autoname": "kerp.overrides.batch.autoname",
         "before_save": "kerp.overrides.batch.before_save",
     },
+    "Address": {"autoname": "kerp.overrides.address.autoname"},
     "Customer": {"autoname": "kerp.overrides.customer.autoname"},
     "Supplier": {"autoname": "kerp.overrides.supplier.autoname"},
 }

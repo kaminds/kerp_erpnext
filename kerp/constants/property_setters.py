@@ -35,4 +35,16 @@ PROPERTY_SETTERS = [
         "property": "show_title_field_in_link",
         "value": "1",
     },
+    {
+        "doctype": "Address",
+        "doctype_or_field": "DocType",
+        "property": "title_field",
+        "value": "address_title",
+    },
+    {
+        "doctype": "Address",
+        "doctype_or_field": "DocType",
+        "property": "search_fields",
+        "value": "address_line1, city, state, country",
+    },
 ]
