@@ -135,6 +135,7 @@ CUSTOM_FIELDS = {
             "label": "Batch Number",
             "fieldtype": "Data",
             "read_only": "1",
+            "no_copy": "1",
             "depends_on": "eval:!doc.__islocal",
             "insert_after": "column_break_3",
         },
