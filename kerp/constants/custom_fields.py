@@ -171,4 +171,20 @@ CUSTOM_FIELDS = {
             "insert_after": "supplier_name",
         }
     ],
+    "Address": [
+        {
+            "fieldname": "licenses_section_kerp",
+            "label": "Address Licenses",
+            "fieldtype": "Section Break",
+            "insert_after": "gst_state_number",
+        },
+        {
+            "fieldname": "licenses_kerp",
+            "label": "Licenses",
+            "fieldtype": "Table",
+            "options": "Address License",
+            "no_copy": "1",
+            "insert_after": "licenses_section_kerp",
+        },
+    ],
 }
