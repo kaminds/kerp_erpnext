@@ -14,5 +14,9 @@ def autoname(doc, method=None):
             supplier = frappe.get_doc("Supplier", link.link_name)
             doc.address_title = supplier.supplier_name
             doc.name = f"{doc.pincode}-{supplier.supplier_code_kerp}-{random_int}"
+        elif link.link_doctype == "Company":
+            company = frappe.get_doc("Company", link.link_name)
+            doc.address_title = company.company_name
+            doc.name = f"{doc.pincode}-{company.abbr}-{random_int}"
         else:
             doc.name = f"{doc.pincode}-{link.link_name}-{random_int}"
