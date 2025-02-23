@@ -47,4 +47,10 @@ PROPERTY_SETTERS = [
         "property": "search_fields",
         "value": "address_line1, city, state, country",
     },
+    {
+        "doctype": "Address",
+        "doctype_or_field": "DocType",
+        "property": "track_changes",
+        "value": "1",
+    },
 ]
