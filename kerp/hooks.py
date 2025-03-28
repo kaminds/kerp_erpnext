@@ -43,7 +43,6 @@ app_license = "agpl-3.0"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Item": "client_scripts/item.js"}
 doctype_js = {
     "Item": "client_scripts/item.js",
     "Sales Invoice": "client_scripts/sales_invoice.js",
@@ -160,6 +159,12 @@ doc_events = {
     "Contact": {"autoname": "kerp.overrides.contact.autoname"},
     "Customer": {"autoname": "kerp.overrides.customer.autoname"},
     "Supplier": {"autoname": "kerp.overrides.supplier.autoname"},
+    "Sales Invoice": {"before_insert": "kerp.overrides.sales_invoice.before_insert"},
+    "Sales Order": {"before_insert": "kerp.overrides.sales_order.before_insert"},
+    "Purchase Invoice": {
+        "before_insert": "kerp.overrides.purchase_invoice.before_insert"
+    },
+    "Purchase Order": {"before_insert": "kerp.overrides.purchase_order.before_insert"},
 }
 
 # Scheduled Tasks
