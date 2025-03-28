@@ -85,7 +85,10 @@ def autoname(self, method=None):
             )
             abbreviations.append(abbr_or_value)
 
-        abbreviations[6] += abbreviations.pop(7)
+        if abbreviations[6] == "0":
+            abbreviations.pop(7)
+        else:
+            abbreviations[6] += abbreviations.pop(7)
 
         if abbreviations:
             item_assay_value = (
@@ -114,5 +117,8 @@ def autoname(self, method=None):
 
             self.item_code = "-".join(abbreviations)
             self.name = self.item_code.upper()
-            self.item_name = f"{item_template.item_name} {item_assay_value} {item_variant_name} {item_grade_standard} {brand_item_ref} {item_brand}"
+            if self.variant_of:
+                self.item_name = f"{item_template.item_name} {item_assay_value} {item_variant_name} {item_grade_standard} {brand_item_ref} {item_brand}"
+            else:
+                self.item_name = f"{self.item_name} {item_assay_value} {item_variant_name} {item_grade_standard} {brand_item_ref} {item_brand}"
             self.item_name = re.sub(r"\s{2,}", " ", self.item_name).strip()
