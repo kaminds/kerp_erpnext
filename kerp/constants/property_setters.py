@@ -53,4 +53,10 @@ PROPERTY_SETTERS = [
         "property": "track_changes",
         "value": "1",
     },
+    {
+        "doctype": "Sales Invoice",
+        "fieldname": "update_stock",
+        "property": "default",
+        "value": "1",
+    },
 ]
