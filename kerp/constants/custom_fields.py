@@ -187,4 +187,50 @@ CUSTOM_FIELDS = {
             "insert_after": "licenses_section_kerp",
         },
     ],
+    "Sales Invoice": [
+        {
+            "fieldname": "marine_insurance_policy_no_kerp",
+            "label": "Marine Insurance Policy No.",
+            "fieldtype": "Data",
+            "no_copy": "1",
+            "insert_after": "distance",
+            "allow_on_submit": "1",
+        },
+        {
+            "fieldname": "not_for_medical_use_kerp",
+            "label": "Not For Medical Use",
+            "fieldtype": "Check",
+            "insert_after": "is_export_with_gst",
+            "allow_on_submit": "1",
+        },
+    ],
+    "Purchase Order": [
+        {
+            "fieldname": "transporter_name_kerp",
+            "label": "Transporter Name",
+            "fieldtype": "Data",
+            "no_copy": "1",
+            "insert_after": "shipping_rule",
+            "allow_on_submit": "1",
+        }
+    ],
+    "Sales Order": [
+        {
+            "fieldname": "transporter_kerp",
+            "label": "Transporter",
+            "fieldtype": "Link",
+            "options": "Supplier",
+            "no_copy": "1",
+            "insert_after": "shipping_rule",
+            "allow_on_submit": "1",
+        },
+        {
+            "fieldname": "transporter_name_kerp",
+            "label": "Transporter Name",
+            "fieldtype": "Data",
+            "no_copy": "1",
+            "insert_after": "transporter_kerp",
+            "allow_on_submit": "1",
+        },
+    ],
 }
