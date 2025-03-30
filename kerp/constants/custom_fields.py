@@ -200,6 +200,7 @@ CUSTOM_FIELDS = {
             "fieldname": "not_for_medical_use_kerp",
             "label": "Not For Medical Use",
             "fieldtype": "Check",
+            "default": "1",
             "insert_after": "is_export_with_gst",
             "allow_on_submit": "1",
         },
