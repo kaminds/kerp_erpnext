@@ -143,6 +143,7 @@ after_install = "kerp.install.after_install"
 
 doc_events = {
     "Item": {"autoname": "kerp.overrides.item.autoname"},
+    "BOM": {"autoname": "kerp.overrides.bom.autoname"},
     "Item Group": {
         "before_insert": "kerp.overrides.item_group.before_insert",
         "on_trash": "kerp.overrides.item_group.on_trash",
