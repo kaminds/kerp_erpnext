@@ -1,6 +1,7 @@
 import frappe
 import re
 from frappe.utils import cstr
+from frappe.model.naming import make_autoname
 
 
 def autoname(self, method=None):
@@ -115,8 +116,35 @@ def autoname(self, method=None):
                 "" if attrs_map["Brand"] == "None" else f"- {attrs_map['Brand']}"
             )
 
-            self.item_code = "-".join(abbreviations)
-            self.name = self.item_code.upper()
+            naming_series_map = {
+                ("Raw Materials", "None", "None"): "ITEM-RM.####",
+                ("Finished Goods", "vitaserve", "None"): "ITEM-VS.####",
+                ("Finished Goods", "Kaminds Nutrichem", "None"): "ITEM-FG.####",
+                ("Semi-Finished Goods", "Kaminds Nutrichem", "None"): "ITEM-SFG.####",
+            }
+
+            if (
+                self.item_group,
+                self.brand,
+                self.item_pack_size_kerp,
+            ) in naming_series_map:
+                self.naming_series = naming_series_map[
+                    (self.item_group, self.brand, self.item_pack_size_kerp)
+                ]
+
+                if self.brand == "vitaserve":
+                    self.item_code = f"ITEM-{self.brand_item_reference_kerp}".upper()
+                else:
+                    self.item_code = make_autoname(self.naming_series).upper()
+
+                self.name = self.item_code
+
+                if self.item_group != "Raw Materials":
+                    self.brand_item_reference_kerp = self.name.split("-")[-1].upper()
+            else:
+                self.item_code = "-".join(abbreviations)
+                self.name = self.item_code.upper()
+
             if self.variant_of:
                 self.item_name = f"{item_template.item_name} {item_assay_value} {item_variant_name} {item_grade_standard} {brand_item_ref} {item_brand}"
             else:
