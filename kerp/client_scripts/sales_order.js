@@ -22,4 +22,14 @@ frappe.ui.form.on("Sales Order", {
 			frm.set_value("transporter_name_kerp", "");
 		}
 	},
+
+	get_email_recipient_filters: function (frm) {
+		if (!frm.doc.customer) return;
+
+		let filters = [
+			["Dynamic Link", "link_doctype", "=", "Customer"],
+			["Dynamic Link", "link_name", "=", frm.doc.customer],
+		];
+		return filters;
+	},
 });
