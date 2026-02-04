@@ -59,4 +59,28 @@ PROPERTY_SETTERS = [
         "property": "default",
         "value": "1",
     },
+    {
+        "doctype": "Sales Invoice",
+        "doctype_or_field": "DocType",
+        "property": "default_print_format",
+        "value": "GST Tax Invoice - KNPL",
+    },
+    {
+        "doctype": "Sales Order",
+        "doctype_or_field": "DocType",
+        "property": "default_print_format",
+        "value": "Sales Order - KNPL",
+    },
+    {
+        "doctype": "Purchase Order",
+        "doctype_or_field": "DocType",
+        "property": "default_print_format",
+        "value": "Purchase Order - KNPL",
+    },
+    {
+        "doctype": "Sample Movement",
+        "doctype_or_field": "DocType",
+        "property": "default_print_format",
+        "value": "Sample Movement - KNPL",
+    },
 ]
