@@ -47,6 +47,8 @@ doctype_js = {
     "Item": "client_scripts/item.js",
     "Sales Invoice": "client_scripts/sales_invoice.js",
     "Sales Order": "client_scripts/sales_order.js",
+    "Purchase Invoice": "client_scripts/purchase_invoice.js",
+    "Purchase Order": "client_scripts/purchase_order.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -154,7 +156,7 @@ doc_events = {
     },
     "Batch": {
         "autoname": "kerp.overrides.batch.autoname",
-        "before_save": "kerp.overrides.batch.before_save",
+        "before_insert": "kerp.overrides.batch.before_insert",
     },
     "Address": {"autoname": "kerp.overrides.address.autoname"},
     "Contact": {"autoname": "kerp.overrides.contact.autoname"},
@@ -166,6 +168,7 @@ doc_events = {
         "before_insert": "kerp.overrides.purchase_invoice.before_insert"
     },
     "Purchase Order": {"before_insert": "kerp.overrides.purchase_order.before_insert"},
+    "Stock Entry": {"on_trash": "kerp.overrides.stock_entry.on_trash"},
 }
 
 # Scheduled Tasks

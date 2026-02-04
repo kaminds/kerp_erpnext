@@ -9,7 +9,7 @@ def autoname(doc, method=None):
     doc.name = doc.batch_id
 
 
-def before_save(doc, method=None):
+def before_insert(doc, method=None):
     if frappe.db.exists(
         "Batch", {"batch_no_kerp": doc.batch_no_kerp, "item": doc.item}
     ):
