@@ -67,6 +67,18 @@ PROPERTY_SETTERS = [
     },
     {
         "doctype": "Sales Order",
+        "fieldname": "incoterm",
+        "property": "allow_on_submit",
+        "value": "1",
+    },
+    {
+        "doctype": "Purchase Order",
+        "fieldname": "incoterm",
+        "property": "allow_on_submit",
+        "value": "1",
+    },
+    {
+        "doctype": "Sales Order",
         "doctype_or_field": "DocType",
         "property": "default_print_format",
         "value": "Sales Order - KNPL",

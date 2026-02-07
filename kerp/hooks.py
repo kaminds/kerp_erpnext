@@ -79,12 +79,11 @@ doctype_js = {
 # Jinja
 # ----------
 
-# add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "kerp.utils.jinja_methods",
-# 	"filters": "kerp.utils.jinja_filters"
-# }
-
+jinja = {
+    "methods": [
+        "kerp.utils.jinja.get_qr_code_kerp",
+    ]
+}
 # Installation
 # ------------
 

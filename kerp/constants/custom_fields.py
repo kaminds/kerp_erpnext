@@ -226,7 +226,8 @@ CUSTOM_FIELDS = {
         {
             "fieldname": "transporter_name_kerp",
             "label": "Transporter Name",
-            "fieldtype": "Data",
+            "fieldtype": "Autocomplete",
+            "options": "ATC Logistical Solutions\nAvinash Cargo (ACPL)\nBhawani Transport Company\nEconomic Freight Carriers\nJaipur Golden Transport\nPragati Roadlines\nVRL Logistics\nV-Trans",
             "no_copy": "1",
             "insert_after": "shipping_rule",
             "allow_on_submit": "1",
