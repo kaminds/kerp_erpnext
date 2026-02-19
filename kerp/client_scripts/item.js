@@ -100,7 +100,7 @@ $.extend(erpnext.item, {
 				},
 				callback: function (r) {
 					// returns variant item
-					if (r.message) {
+					if (r.message && frm.doc.name !== "Micronutrient Premix") {
 						var variant = r.message;
 						frappe.msgprint_dialog = frappe.msgprint(
 							__("Item Variant {0} already exists with same attributes", [
@@ -109,9 +109,9 @@ $.extend(erpnext.item, {
 									{
 										item_encoded: encodeURIComponent(variant),
 										item: variant,
-									}
+									},
 								),
-							])
+							]),
 						);
 						frappe.msgprint_dialog.hide_on_page_refresh = true;
 						frappe.msgprint_dialog.$wrapper

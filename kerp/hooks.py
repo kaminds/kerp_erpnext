@@ -170,6 +170,12 @@ doc_events = {
     "Stock Entry": {"on_trash": "kerp.overrides.stock_entry.on_trash"},
 }
 
+extend_doctype_class = {
+    "Item": [
+        "kerp.extends.item.CustomItem",
+    ],
+}
+
 # Scheduled Tasks
 # ---------------
 
