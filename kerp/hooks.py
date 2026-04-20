@@ -26,7 +26,7 @@ app_license = "agpl-3.0"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/kerp/css/kerp.css"
-# app_include_js = "/assets/kerp/js/kerp.js"
+app_include_js = "kerp.bundle.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/kerp/css/kerp.css"
@@ -206,7 +206,7 @@ extend_doctype_class = {
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "kerp.event.get_events"
+# 	"erpnext.controllers.queries.get_batch_no": "kerp.overrides.whitelist_methods.get_batch_no",
 # }
 #
 # each overriding function accepts a `data` argument;
