@@ -1,5 +1,6 @@
 import frappe
 from frappe import _
+from frappe.utils import get_datetime, add_days
 
 
 def execute(filters=None):
@@ -55,9 +56,11 @@ def apply_filters(query, filters):
 			else:
 				query = query.where(SerialBatchBundle[field] == filters[field])
 
-	if filters.get("from_date") and filters.get("to_date"):
-		query = query.where(
-			SerialBatchBundle.posting_datetime.between(filters["from_date"], filters["to_date"])
+	start = get_datetime(filters["from_date"])
+	end = get_datetime(add_days(filters["to_date"], 1))
+	query = query.where(
+		(SerialBatchBundle.posting_datetime >= start) &
+		(SerialBatchBundle.posting_datetime < end)
 		)
 
 	for field in ["serial_no", "batch_no"]:
