@@ -18,11 +18,12 @@ def get_batch_no(doctype, txt, searchfield, start, page_len, filters):
 	filtered_batches = get_filterd_batches(batches)
 
 	if filters.get("is_inward"):
-		filtered_batches.extend(get_empty_batches(filters, start, page_len, filtered_batches, txt))
+		filtered_batches.extend(get_empty_batches(filters, start, page_len, filtered_batches, txt, title_field))
 
 	return filtered_batches
 
 def get_batches_from_stock_ledger_entries(searchfields, title_field, txt, filters, start=0, page_len=100):
+	item_code = filters.get("item_code") or filters.get("item")
 	stock_ledger_entry = frappe.qb.DocType("Stock Ledger Entry")
 	batch_table = frappe.qb.DocType("Batch")
 
@@ -40,7 +41,7 @@ def get_batches_from_stock_ledger_entries(searchfields, title_field, txt, filter
 		)
 		.where(stock_ledger_entry.is_cancelled == 0)
 		.where(
-			(stock_ledger_entry.item_code == filters.get("item_code"))
+			(stock_ledger_entry.item_code == item_code)
 			& (batch_table.disabled == 0)
 			& (stock_ledger_entry.batch_no.isnotnull())
 		)
@@ -75,6 +76,7 @@ def get_batches_from_stock_ledger_entries(searchfields, title_field, txt, filter
 
 
 def get_batches_from_serial_and_batch_bundle(searchfields, title_field, txt, filters, start=0, page_len=100):
+	item_code = filters.get("item_code") or filters.get("item")
 	bundle = frappe.qb.DocType("Serial and Batch Entry")
 	stock_ledger_entry = frappe.qb.DocType("Stock Ledger Entry")
 	batch_table = frappe.qb.DocType("Batch")
@@ -95,7 +97,7 @@ def get_batches_from_serial_and_batch_bundle(searchfields, title_field, txt, fil
 		)
 		.where(stock_ledger_entry.is_cancelled == 0)
 		.where(
-			(stock_ledger_entry.item_code == filters.get("item_code"))
+			(stock_ledger_entry.item_code == item_code)
 			& (batch_table.disabled == 0)
 			& (stock_ledger_entry.serial_and_batch_bundle.isnotnull())
 		)
@@ -146,8 +148,9 @@ def get_filterd_batches(data):
 
 	return filterd_batch
 
-def get_empty_batches(filters, start, page_len, filtered_batches=None, txt=None):
-	query_filter = {"item": filters.get("item_code"), "disabled": 0}
+def get_empty_batches(filters, start, page_len, filtered_batches=None, txt=None, title_field="name"):
+	item_code = filters.get("item_code") or filters.get("item")
+	query_filter = {"item": item_code, "disabled": 0}
 	if txt:
 		query_filter["name"] = ("like", f"%{txt}%")
 
@@ -155,11 +158,18 @@ def get_empty_batches(filters, start, page_len, filtered_batches=None, txt=None)
 	if exclude_batches:
 		query_filter["name"] = ("not in", exclude_batches)
 
-	return frappe.get_all(
-		"Batch",
-		fields=["name", "batch_qty"],
-		filters=query_filter,
-		limit_start=start,
-		limit_page_length=page_len,
-		as_list=1,
-	)
+	batches = frappe.get_all(
+        "Batch",
+        fields=["name", title_field, "stock_uom", "manufacturing_date", "expiry_date"],
+        filters=query_filter,
+        limit_start=start,
+        limit_page_length=page_len,
+    )
+	
+	result = []
+	for b in batches:
+		mfg = f"MFG-{b.manufacturing_date}" if b.manufacturing_date else ""
+		exp = f"EXP-{b.expiry_date}" if b.expiry_date else ""
+		result.append((b.name, b.get(title_field) or b.name, 0.0, b.stock_uom or "", mfg, exp))
+		
+	return result
