@@ -30,3 +30,23 @@ def remove_item_attr_value(item_attr, attr_abbr):
                 attr.remove(row)
                 break
         attr.save()
+
+@frappe.whitelist()
+def get_transporter_list(txt: str = None, limit: int = 20):
+    supplier = frappe.qb.DocType("Supplier")
+
+    query = (
+        frappe.qb.from_(supplier)
+        .select(supplier.name.as_("value"), supplier.supplier_name.as_("label"))
+        .where(supplier.is_transporter == 1)
+        .where(supplier.disabled == 0)
+        .orderby(supplier.supplier_name)
+        .limit(int(limit) if limit else 20)
+    )
+
+    if txt:
+        query = query.where(
+            supplier.name.like(f"%{txt}%") | supplier.supplier_name.like(f"%{txt}%")
+        )
+
+    return query.run(as_dict=True)
