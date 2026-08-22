@@ -50,6 +50,7 @@ doctype_js = {
     "Purchase Invoice": "client_scripts/purchase_invoice.js",
     "Purchase Order": "client_scripts/purchase_order.js",
     "Stock Entry": "client_scripts/stock_entry.js",
+    "Quotation": "client_scripts/quotation.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -169,12 +170,18 @@ doc_events = {
     },
     "Purchase Order": {"before_insert": "kerp.overrides.purchase_order.before_insert"},
     "Stock Entry": {"on_trash": "kerp.overrides.stock_entry.on_trash"},
+    "Communication": {
+        "before_insert": "kerp.overrides.communication.add_internal_recipients"
+    }
 }
 
 extend_doctype_class = {
     "Item": [
         "kerp.extends.item.CustomItem",
     ],
+    "Purchase Order": [
+        "kerp.extends.purchase_order.PurchaseOrderMixin"
+    ]
 }
 
 # Scheduled Tasks
@@ -273,3 +280,33 @@ extend_doctype_class = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+permission_query_conditions = {
+    "Sales Invoice": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.sales_invoice_permission_query",
+    "Sales Order": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.sales_order_permission_query",
+    "Purchase Invoice": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.purchase_invoice_permission_query",
+    "Purchase Order": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.purchase_order_permission_query",
+    "GL Entry": ["kerp.kerp.doctype.party_access_restriction.party_access_restriction.gl_entry_permission_query",
+                 "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_gl_entry_permission_query"
+                ],
+    "Payment Entry": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.payment_entry_permission_query",
+    "Supplier": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.supplier_permission_query",
+    "Customer": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.customer_permission_query",
+    "Employee": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.employee_permission_query",
+    "Account": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_permission_query",
+}
+
+has_permission = {
+    "Sales Invoice": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.sales_invoice_has_permission",
+    "Sales Order": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.sales_order_has_permission",
+    "Purchase Invoice": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.purchase_invoice_has_permission",
+    "Purchase Order": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.purchase_order_has_permission",
+    "GL Entry": ["kerp.kerp.doctype.party_access_restriction.party_access_restriction.gl_entry_has_permission",
+                 "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_gl_entry_has_permission"
+                ],
+    "Payment Entry": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.payment_entry_has_permission",
+    "Supplier": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.supplier_has_permission",
+    "Customer": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.customer_has_permission",
+    "Employee": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.employee_has_permission",
+    "Account": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_has_permission", 
+}

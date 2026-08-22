@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-08-15 14:56:09.861533",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_xbti",
+  "restricted_parties"
+ ],
+ "fields": [
+  {
+   "fieldname": "restricted_parties",
+   "fieldtype": "Table",
+   "label": "Restricted Parties",
+   "options": "Party Access Restriction Detail"
+  },
+  {
+   "description": "Controls which Suppliers, Customers, or Employees are hidden from regular staff in ledgers, invoices, and reports. Add or remove entries below to manage access.",
+   "fieldname": "section_break_xbti",
+   "fieldtype": "Section Break",
+   "label": "Party Access Restriction"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-15 15:08:14.589562",
+ "modified_by": "Administrator",
+ "module": "KERP",
+ "name": "Party Access Restriction",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
