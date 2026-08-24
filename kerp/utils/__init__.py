@@ -37,7 +37,7 @@ def get_transporter_list(txt: str = None, limit: int = 20):
 
     query = (
         frappe.qb.from_(supplier)
-        .select(supplier.name.as_("value"), supplier.supplier_name.as_("label"))
+        .select(supplier.supplier_name.as_("value"))
         .where(supplier.is_transporter == 1)
         .where(supplier.disabled == 0)
         .orderby(supplier.supplier_name)
