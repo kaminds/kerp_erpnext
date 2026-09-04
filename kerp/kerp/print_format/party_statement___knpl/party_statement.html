@@ -1,0 +1,157 @@
+<!--
+  Party Statement — paste this into a new "Print Format" record
+  (Setup > Printing > Print Format), doctype = "Sales Invoice" or
+  attach it via the api/party_statement.py whitelisted method below
+  which renders it standalone for a whole party (not one invoice).
+  Jinja variables expected: company_name, party, report_date,
+  invoices (list of dicts: name, posting_date, due_date, outstanding,
+  is_overdue, overdue_days, age_bucket), total_due, total_overdue,
+  not_due, buckets (dict: "1-30", "31-60", "61-90", "90+" -> amount)
+-->
+<style>
+  /* Read by frappe.utils.pdf: any margin/orientation/page-size declared here
+     becomes a wkhtmltopdf page option automatically — this is how a print
+     format controls its own page setup instead of the caller having to. */
+  .print-format {
+    orientation: Landscape;
+    margin-top: 8mm;
+    margin-bottom: 8mm;
+    margin-left: 8mm;
+    margin-right: 8mm;
+  }
+  .statement-wrap { font-family: 'Calibri', Arial, sans-serif; color:#1a1a1a; font-size:11px; }
+  .statement-header {
+    background:#1F3864; color:#fff; padding:18px 22px; border-radius:4px 4px 0 0;
+  }
+  .statement-header h1 { margin:0; font-size:18px; letter-spacing:0.5px; }
+  .statement-header .sub { font-size:11px; color:#C9D6EA; margin-top:4px; }
+  /* .statement-meta and .ageing-strip are plain tables, not flexbox — the PDF
+     is rendered by wkhtmltopdf (an old WebKit build) which doesn't reliably
+     support flex, and doesn't support the flex `gap` property at all, so
+     these rows could silently collapse into a stack instead of staying
+     side-by-side. Tables render identically everywhere. */
+  table.statement-meta { width:100%; border-collapse:collapse; background:#F2F5FA; border-bottom:2px solid #1F3864; }
+  table.statement-meta td { padding:12px 22px; }
+  .statement-meta span.label { display:block; font-size:9px; color:#666; text-transform:uppercase; }
+  .statement-meta span.value { font-size:13px; font-weight:700; color:#1F3864; }
+  table.ageing-strip { width:100%; border-collapse:separate; border-spacing:5px; background:#fff; border-bottom:1px solid #E3E8EF; }
+  .ageing-chip {
+    width:25%; text-align:center; padding:6px 4px; border-radius:6px; background:#F7F9FC;
+    border:1px solid #E3E8EF;
+  }
+  .ageing-chip .b-label { font-size:8px; text-transform:uppercase; color:#666; }
+  .ageing-chip .b-value { font-size:12px; font-weight:700; color:#1F3864; margin-top:2px; }
+  .ageing-chip.bucket-1 { background:#FFF6DA; border-color:#F0DFA0; }
+  .ageing-chip.bucket-1 .b-value { color:#8A6D00; }
+  .ageing-chip.bucket-2 { background:#FDE7D6; border-color:#F0C0A0; }
+  .ageing-chip.bucket-2 .b-value { color:#B0530A; }
+  .ageing-chip.bucket-3 { background:#FCE4E4; border-color:#F0A8A8; }
+  .ageing-chip.bucket-3 .b-value { color:#9C0006; }
+  .ageing-chip.bucket-4 { background:#F5D0D0; border-color:#E08080; }
+  .ageing-chip.bucket-4 .b-value { color:#6E0000; }
+  table.statement-table { width:100%; border-collapse:collapse; margin-top:14px; }
+  table.statement-table th {
+    background:#1F3864; color:#fff; padding:8px 10px; text-align:left; font-size:10px;
+    text-transform:uppercase; letter-spacing:0.3px;
+  }
+  /* table.statement-table th's own text-align:left is more specific than
+     .amt's text-align:right, so it was winning on the header cell despite
+     the class being there — this pins it back to right for that one header */
+  table.statement-table th.amt { text-align:right; }
+  table.statement-table td { padding:7px 10px; border-bottom:1px solid #E3E8EF; font-size:12px; }
+  table.statement-table tr:nth-child(even) td { background:#F7F9FC; }
+  .amt { text-align:right; font-variant-numeric:tabular-nums; }
+  .num { text-align:center; font-variant-numeric:tabular-nums; font-weight:700; }
+  .status-overdue { color:#9C0006; font-weight:700; background:#FCE4E4; padding:2px 8px; border-radius:8px; }
+  .status-notdue  { color:#1E7B34; font-weight:700; background:#E6F4EA; padding:2px 8px; border-radius:8px; }
+  .overdue-days { color:#9C0006; }
+  .summary-row td { font-weight:700; background:#DDE6F0 !important; border-top:2px double #1F3864; }
+  .footer-note { margin-top:18px; font-size:9px; color:#888; text-align:center; }
+</style>
+
+<div class="statement-wrap">
+  <div class="statement-header">
+    <h1>{{ company_name }}</h1>
+    <div class="sub">Statement of Outstanding Dues — as on {{ frappe.utils.formatdate(report_date) }}</div>
+  </div>
+
+  <table class="statement-meta">
+    <tr>
+      <td>
+        <span class="label">Customer</span>
+        <span class="value">{{ party }}</span>
+      </td>
+      <td>
+        <span class="label">Total Due</span>
+        <span class="value">{{ frappe.utils.fmt_money(total_due, currency=currency) }}</span>
+      </td>
+      <td>
+        <span class="label">Total Overdue</span>
+        <span class="value" style="color:#9C0006;">{{ frappe.utils.fmt_money(total_overdue, currency=currency) }}</span>
+      </td>
+    </tr>
+  </table>
+
+  <table class="ageing-strip">
+    <tr>
+      <td class="ageing-chip bucket-1">
+        <div class="b-label">1–30 Days</div>
+        <div class="b-value">{{ frappe.utils.fmt_money(buckets["1-30"], currency=currency) }}</div>
+      </td>
+      <td class="ageing-chip bucket-2">
+        <div class="b-label">31–60 Days</div>
+        <div class="b-value">{{ frappe.utils.fmt_money(buckets["31-60"], currency=currency) }}</div>
+      </td>
+      <td class="ageing-chip bucket-3">
+        <div class="b-label">61–90 Days</div>
+        <div class="b-value">{{ frappe.utils.fmt_money(buckets["61-90"], currency=currency) }}</div>
+      </td>
+      <td class="ageing-chip bucket-4">
+        <div class="b-label">90+ Days</div>
+        <div class="b-value">{{ frappe.utils.fmt_money(buckets["90+"], currency=currency) }}</div>
+      </td>
+    </tr>
+  </table>
+
+  <table class="statement-table">
+    <thead>
+      <tr>
+        <th>Invoice No.</th>
+        <th>Invoice Date</th>
+        <th>Due Date</th>
+        <th class="num">Overdue Days</th>
+        <th class="amt">Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inv in invoices %}
+      <tr>
+        <td>{{ inv.name }}</td>
+        <td>{{ frappe.utils.formatdate(inv.posting_date) }}</td>
+        <td>{{ frappe.utils.formatdate(inv.due_date) if inv.due_date else "-" }}</td>
+        <td class="num {{ 'overdue-days' if inv.is_overdue else '' }}">
+          {{ inv.overdue_days if inv.is_overdue else "-" }}
+        </td>
+        <td class="amt">{{ frappe.utils.fmt_money(inv.outstanding, currency=currency) }}</td>
+        <td>
+          {% if inv.is_overdue %}
+            <span class="status-overdue">Overdue</span>
+          {% else %}
+            <span class="status-notdue">Not Overdue</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      <tr class="summary-row">
+        <td colspan="4">GRAND TOTAL</td>
+        <td class="amt">{{ frappe.utils.fmt_money(total_due, currency=currency) }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    This is a system-generated statement from {{ company_name }} · Generated on {{ frappe.utils.formatdate(frappe.utils.nowdate()) }}
+  </div>
+</div>

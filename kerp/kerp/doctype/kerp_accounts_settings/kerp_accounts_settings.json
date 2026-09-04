@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-08-30 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_outstanding_reminders",
+  "section_break_general",
+  "outstanding_reminder_enabled",
+  "section_break_email",
+  "outstanding_reminder_sender_email_account",
+  "outstanding_reminder_cc_addresses",
+  "section_break_timing",
+  "outstanding_reminder_due_soon_window_days",
+  "outstanding_reminder_frequency_days"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_outstanding_reminders",
+   "fieldtype": "Tab Break",
+   "label": "Outstanding Reminders"
+  },
+  {
+   "fieldname": "section_break_general",
+   "fieldtype": "Section Break",
+   "label": "General"
+  },
+  {
+   "default": "1",
+   "description": "Master switch for send_overdue_reminder / send_overdue_reminders. Turn off to pause reminders (e.g. during a billing freeze) without touching code.",
+   "fieldname": "outstanding_reminder_enabled",
+   "fieldtype": "Check",
+   "label": "Enable Outstanding Reminders"
+  },
+  {
+   "fieldname": "section_break_email",
+   "fieldtype": "Section Break",
+   "label": "Email"
+  },
+  {
+   "description": "Email Account reminders are sent from. Must have Enable Outgoing checked. Leave blank to fall back to Frappe's default outgoing account.",
+   "fieldname": "outstanding_reminder_sender_email_account",
+   "fieldtype": "Link",
+   "label": "Send Reminders From",
+   "options": "Email Account"
+  },
+  {
+   "description": "Comma or newline-separated email addresses to CC on every reminder email. Leave blank for none.",
+   "fieldname": "outstanding_reminder_cc_addresses",
+   "fieldtype": "Small Text",
+   "label": "CC Address(es)"
+  },
+  {
+   "fieldname": "section_break_timing",
+   "fieldtype": "Section Break",
+   "label": "Timing"
+  },
+  {
+   "default": "3",
+   "description": "How many days ahead of its due date an invoice shows up in the \"Upcoming Due Invoices\" section of a reminder.",
+   "fieldname": "outstanding_reminder_due_soon_window_days",
+   "fieldtype": "Int",
+   "label": "Due Soon Window (Days)",
+   "non_negative": 1
+  },
+  {
+   "default": "2",
+   "description": "How often, in days, outstanding reminders are intended to go out. Not yet wired to a scheduled job — this is a placeholder for when send_overdue_reminders is put on a cron schedule.",
+   "fieldname": "outstanding_reminder_frequency_days",
+   "fieldtype": "Int",
+   "label": "Reminder Frequency (Days)",
+   "non_negative": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-30 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "KERP",
+ "name": "KERP Accounts Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Accounts Manager"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

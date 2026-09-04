@@ -74,9 +74,11 @@ def _merge_emails(existing, new_emails):
     return ", ".join(sorted(merged))
 
 
-def get_sales_team_emails(doc):
-    """Example dynamic recipient resolver for Sales Invoice."""
-    sales_invoice = frappe.get_cached_doc("Sales Invoice", doc.reference_name)
+def get_sales_team_emails_for_invoice(sales_invoice_name):
+    """Core resolver: sales team (+ their managers) on a given Sales Invoice.
+    Shared by the Communication hook below and kerp.utils.party_statement's
+    outstanding-reminder CC list — kept as the one place this lookup lives."""
+    sales_invoice = frappe.get_cached_doc("Sales Invoice", sales_invoice_name)
     emails = []
     for row in sales_invoice.get("sales_team") or []:
         if not row.sales_person:
@@ -103,3 +105,8 @@ def get_sales_team_emails(doc):
                 emails.append(manager_email)
 
     return emails
+
+
+def get_sales_team_emails(doc):
+    """Example dynamic recipient resolver for Sales Invoice."""
+    return get_sales_team_emails_for_invoice(doc.reference_name)
