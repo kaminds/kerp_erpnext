@@ -412,6 +412,7 @@ def _build_overdue_email_body(
 
 @frappe.whitelist()
 def get_statement_pdf(customer, company=None, report_date=None):
+	frappe.only_for(["Sales User", "Accounts User", "Accounts Manager", "Auditor"], message=True)
 	company = company or frappe.defaults.get_user_default("Company")
 	report_date = getdate(report_date or nowdate())
 	currency = frappe.get_cached_value("Company", company, "default_currency")
