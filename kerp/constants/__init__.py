@@ -6,4 +6,7 @@ UOM_ABBR = {
     "Bag": "BAG",
     "Box": "BOX",
     "Drum": "DRM",
+    "Jar": "JAR",
+    "Activity Unit": "U",
+    "Sachet": "SCH",
 }
