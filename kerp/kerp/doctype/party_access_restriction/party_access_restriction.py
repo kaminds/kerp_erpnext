@@ -104,20 +104,19 @@ def gl_entry_permission_query(user):
 
 
 def payment_entry_permission_query(user):
+    if _user_can_bypass(user):
+        return ""
+
     restricted_suppliers = get_restricted_parties(user, "Supplier")
     restricted_customers = get_restricted_parties(user, "Customer")
-    restricted_employees = get_restricted_parties(user, "Employee")
 
-    conditions = []
+    conditions = ["`tabPayment Entry`.party_type = 'Employee'"]
     if restricted_suppliers:
         vals = ", ".join(frappe.db.escape(p) for p in restricted_suppliers)
         conditions.append(f"(`tabPayment Entry`.party_type = 'Supplier' and `tabPayment Entry`.party in ({vals}))")
     if restricted_customers:
         vals = ", ".join(frappe.db.escape(p) for p in restricted_customers)
         conditions.append(f"(`tabPayment Entry`.party_type = 'Customer' and `tabPayment Entry`.party in ({vals}))")
-    if restricted_employees:
-        vals = ", ".join(frappe.db.escape(p) for p in restricted_employees)
-        conditions.append(f"(`tabPayment Entry`.party_type = 'Employee' and `tabPayment Entry`.party in ({vals}))")
 
     if conditions:
         return "not (" + " or ".join(conditions) + ")"
@@ -177,6 +176,10 @@ def gl_entry_has_permission(doc, ptype, user):
 
 
 def payment_entry_has_permission(doc, ptype, user):
+    if _user_can_bypass(user):
+        return True
+    if doc.party_type == "Employee":
+        return False
     if doc.party_type and doc.party:
         return not is_restricted(user, doc.party_type, doc.party)
     return True
