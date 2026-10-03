@@ -148,8 +148,10 @@ def employee_permission_query(user):
         )
     return ""
 
-
-
+def journal_entry_permission_query(user):
+    if _user_can_bypass(user):
+        return ""
+    return "1 = 0"
 
 # ---------- HAS_PERMISSION HOOKS ----------
 
@@ -262,3 +264,6 @@ def account_has_permission(doc, ptype, user):
     type_match = doc.account_type in ALLOWED_ACCOUNT_TYPES
 
     return name_match and type_match
+
+def journal_entry_has_permission(doc, ptype, user):
+    return _user_can_bypass(user)

@@ -295,6 +295,7 @@ permission_query_conditions = {
     "Customer": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.customer_permission_query",
     "Employee": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.employee_permission_query",
     "Account": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_permission_query",
+    "Journal Entry": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.journal_entry_permission_query",
 }
 
 has_permission = {
@@ -310,4 +311,5 @@ has_permission = {
     "Customer": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.customer_has_permission",
     "Employee": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.employee_has_permission",
     "Account": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.account_has_permission", 
+    "Journal Entry": "kerp.kerp.doctype.party_access_restriction.party_access_restriction.journal_entry_has_permission"
 }
