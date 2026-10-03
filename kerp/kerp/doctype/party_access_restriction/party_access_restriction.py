@@ -4,8 +4,8 @@
 import frappe
 from frappe.model.document import Document
 
-ALLOWED_NAME_PATTERNS = ["%Debtor%", "%Creditor%", "%Bank%"]
-ALLOWED_ACCOUNT_TYPES = ["Receivable", "Payable", "Bank", "Cash"]
+ALLOWED_NAME_PATTERNS = ["%Debtor%", "%Creditor%", "%Freight%"]
+ALLOWED_ACCOUNT_TYPES = ["Receivable", "Payable", "Bank", "Cash", "Chargeable"]
 BYPASS_ROLES = {"System Manager", "Accounts Manager"}
 
 class PartyAccessRestriction(Document):
