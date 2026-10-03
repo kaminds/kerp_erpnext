@@ -31,7 +31,11 @@ class RestrictedReceivablePayableReport(ReceivablePayableReport):
         if _user_can_bypass(user):
             return
 
+        self.qb_selection_filter.append(self.ple.party_type != "Employee")
+
         for party_type in self.party_type:
+            if party_type == "Employee":
+                continue
             restricted = _get_restricted_parties(user, party_type)
             if restricted:
                 self.qb_selection_filter.append(
