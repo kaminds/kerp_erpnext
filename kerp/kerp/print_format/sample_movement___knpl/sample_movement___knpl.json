@@ -2,7 +2,7 @@
  "absolute_value": 0,
  "align_labels_right": 0,
  "creation": "2026-01-28 02:48:46.307266",
- "css": "td, p, div {\n    font-family: \"Google Sans\" !important;\n}",
+ "css": "td, p, div {\n    font-family: \"Google Sans\" !important;\n}\n\n.print-format {\n  color: #000000;\n}",
  "custom_format": 1,
  "default_print_language": "en-GB",
  "disabled": 0,
@@ -17,7 +17,7 @@
  "margin_left": 15.0,
  "margin_right": 15.0,
  "margin_top": 15.0,
- "modified": "2026-02-14 15:33:03.974451",
+ "modified": "2026-11-22 22:39:29.230821",
  "modified_by": "Administrator",
  "module": "KERP",
  "name": "Sample Movement - KNPL",
@@ -29,6 +29,7 @@
  "print_format_for": "DocType",
  "print_format_type": "Jinja",
  "raw_printing": 0,
+ "show_label_colon": 0,
  "show_section_headings": 0,
  "standard": "Yes"
 }

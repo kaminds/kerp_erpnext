@@ -2,7 +2,7 @@
  "absolute_value": 0,
  "align_labels_right": 0,
  "creation": "2026-10-11 21:47:16.107452",
- "css": ".print-format {\n  font-family: 'Google Sans' !important;\n  padding: 20px;\n  margin-right: 3mm;\n  margin-left: 3mm;\n  margin-top: 3mm;\n}",
+ "css": "@media screen {\n    html:not(:has(meta[name=\"viewport\"])) body {\n        padding: 9mm 11mm 5mm;\n    }\n}\n\n.print-format {\n  font-family: 'Google Sans' !important;\n  padding: 20px;\n  margin-right: 3mm;\n  margin-left: 3mm;\n  margin-top: 3mm;\n}",
  "custom_format": 1,
  "default_print_language": "en-GB",
  "disabled": 0,
@@ -17,7 +17,7 @@
  "margin_left": 15.0,
  "margin_right": 15.0,
  "margin_top": 15.0,
- "modified": "2026-10-11 21:47:16.107452",
+ "modified": "2026-11-22 22:18:20.791906",
  "modified_by": "Administrator",
  "module": "KERP",
  "name": "Salary Slip (New) - KNPL",
@@ -29,6 +29,7 @@
  "print_format_for": "DocType",
  "print_format_type": "Jinja",
  "raw_printing": 0,
+ "show_label_colon": 0,
  "show_section_headings": 0,
  "standard": "Yes"
 }
